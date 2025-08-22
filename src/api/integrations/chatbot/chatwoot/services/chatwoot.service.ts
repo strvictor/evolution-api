@@ -1536,7 +1536,7 @@ export class ChatwootService {
         const data: SendTextDto = {
           number: chatId,
           text: body.content.replace(/\\\r\n|\\\n|\n/g, '\n'),
-          delay: 1200,
+          delay: 0,
         };
 
         sendTelemetry('/message/sendText');
@@ -2106,26 +2106,7 @@ export class ChatwootService {
         }
 
         if (reactionMessage) {
-          if (reactionMessage.text) {
-            const send = await this.createMessage(
-              instance,
-              getConversation,
-              reactionMessage.text,
-              messageType,
-              false,
-              [],
-              {
-                message: { extendedTextMessage: { contextInfo: { stanzaId: reactionMessage.key.id } } },
-              },
-              'WAID:' + body.key.id,
-              quotedMsg,
-            );
-            if (!send) {
-              this.logger.warn('message not sent');
-              return;
-            }
-          }
-
+          // ignora as reações
           return;
         }
 
